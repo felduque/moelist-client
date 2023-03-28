@@ -1,0 +1,15 @@
+.not_found_wrapper {
+    height: 90vh;
+}
+
+.not_found_container {
+    background-color: var(--dark-bg);
+}
+
+.not_found_text_wrapper {
+    max-width: 900px;
+}
+
+.not-found-img {
+    max-width: 300px;
+}

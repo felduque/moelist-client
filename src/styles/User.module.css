@@ -1,0 +1,34 @@
+.button_icon {
+    display: inline ;
+}   
+
+.drop_zone img {
+    max-width: 100%;
+}
+
+.drop_zone {
+    min-width: 100% !important;
+    min-height: 300px;
+    border: 4px dashed;
+    border-color: var(--primary-color) !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.drop_image > input {
+    left: 100% !important;
+}
+
+.drop_image span {
+    color: white !important;
+}
+
+.fields_container > div,
+.user_form > div {
+    margin-bottom: 20px;
+}

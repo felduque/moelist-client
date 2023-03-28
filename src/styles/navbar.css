@@ -1,0 +1,164 @@
+.navbar-container {
+    position: sticky;
+    top: 0;
+    background-color: var(--primary-color);
+  
+    border-bottom: 1px solid #e5e5e5;
+    z-index: 100;
+    padding: 0 10px;
+  }
+  
+  .navbar-container__logo {
+    /* contaienr del texto del logo */
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    margin-right: 20px;
+  }
+  
+  
+  .top-header-text {
+    margin-top: 1px;
+    color: black
+  }
+
+  .top-header svg {
+    fill: black;
+  }
+  
+  .title-logo-moelist-navbar {
+    /* texto del logo */
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
+  }
+  
+  .navbar-container__search {
+    /* contenedor del input de busqueda */
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    max-width: 500px;
+    margin: 0 20px;
+  }
+  
+  .navbar-container__search__input {
+    /* input de busqueda */
+    width: 100%;
+    height: 40px;
+    border-radius: 20px;
+    border: none;
+    padding: 0 20px;
+    font-size: 1rem;
+    outline: none;
+  }
+  
+  .navbar-container__search__input::placeholder {
+    /* placeholder del input de busqueda */
+    color: #e5e5e5;
+  }
+  
+  .navbar-container__icons_home {
+    /* contenedor de los iconos de la derecha */
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    margin-left: 20px;
+  }
+  
+  .navbar-container__icons_home__icon {
+    /* iconos de la derecha */
+    color: #fff;
+    font-size: 1.5rem;
+    margin: 0 10px;
+    cursor: pointer;
+  }
+  
+  .navbar-container-icons__explore {
+    /* contenedor de los iconos de la derecha */
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    margin-left: 20px;
+  }
+  
+  .navbar-container__icons__explore__img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin: 0 10px;
+    cursor: pointer;
+  }
+  
+  .navbar-text-explorer {
+    /* texto del logo */
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
+  }
+  
+  .navbar-container__icons__profile {
+    /* contenedor de los iconos de la derecha */
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    margin-left: 20px;
+  }
+  
+  .navbar-text-profile {
+    /* texto del logo */
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin: 0;
+  }
+  
+  .nav-list {
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+  }
+  
+  .nav-list-link {
+    text-decoration: none;
+    position: relative;
+  }
+  
+  @media (max-width: 576px) {
+    .navbar-container {
+      justify-content: space-between;
+    }
+  
+    .nav-list {
+      align-items: center;
+    }
+  }
+  
+  .user-dropdown {
+    display: block !important;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s cubic-bezier(0.48, 0.01, 0.5, 0.99), visibility 0.1s linear;
+}
+
+.user-link:hover + .user-dropdown {
+    opacity: 1;
+    visibility: visible;
+}
+
+.user-dropdown:hover {
+    opacity: 1;
+    visibility: visible;
+}
+
+.user-dropdown .dropdown-item:hover {
+    background-color: var(--primary-color);
+}

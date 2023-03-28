@@ -1,0 +1,28 @@
+
+.pagination {
+    justify-content: center;
+    gap: 10px;
+    display: flex;
+  }
+  
+  .pagination li > a {
+    border: 1px solid var(--primary-color);
+    padding: 8px 16px;
+    border-radius: 3px;
+  }
+  
+  .pagination > li {
+    list-style: none;
+  }
+  
+  .pagination > li:hover a, 
+  .pagination > .active_page a{
+    color: white !important;
+    background-color: var(--primary-color);
+  }
+  
+  .pagination > .disabled a {
+    background-color: #ccc;
+    color: black !important;
+    border: transparent
+  }

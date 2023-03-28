@@ -1,0 +1,59 @@
+.input-field {
+    position: relative;
+    height: 50px;
+    width: 100%;
+}
+
+.input-field  input {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    padding: 0 35px;
+    background-color: transparent;
+    color: white;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid #ccc;
+    transition: all 0.2s ease;
+}
+
+.input-field .input-icon {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    font-size: 23px;
+    color: white;
+    transition: all 0.2s ease;
+}
+
+.input-field .input-icon.show-hide-pw {
+    right: 0;
+    left: auto;
+}
+
+.input-field input:is(:focus) {
+    border-bottom-color: var(--primary-color);
+}
+
+.input-field input:is(:focus) ~ .input-icon {
+   color: var(--primary-color);
+}
+
+form .btn-link {
+    text-decoration: none;
+    color: var(--primary-color);
+}   
+
+form .btn-link:hover {
+    color: var(--primary-color);
+    text-decoration: underline;
+}
+
+.showHide {
+    cursor: pointer;
+}
+
+.form-title {
+    text-transform: capitalize;
+}

@@ -1,0 +1,35 @@
+.side {
+    color: red !important;
+}
+
+.container_home_grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+    grid-template-areas:
+        "main main  main sidebar"
+        "main main  main sidebar"
+        "main main  main sidebar"
+        "main main  main sidebar"
+}
+
+.container_home_grid__main {
+    grid-area: main;
+
+}
+
+.container_home_grid__sidebar {
+    grid-area: sidebar;
+}
+
+
+@media (max-width: 768px) {
+    .container_home_grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas:
+        "main main  main main"
+        "sidebar sidebar  sidebar sidebar"
+    }
+}
