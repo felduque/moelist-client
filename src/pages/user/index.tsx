@@ -1,7 +1,7 @@
 import React, { ReactElement, useEffect } from "react";
 
 import { NextPageWithLayout } from "../_app";
-import Layout from "../../components/layouts/layout";
+import Layout from "../../Components/layouts/Layout";
 import { UserSettings } from "@/Components/User/UserSettings";
 import { useRouter } from "next/router";
 
