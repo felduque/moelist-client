@@ -1,4 +1,4 @@
-import { UserSettings } from "@/components/User/UserSettings";
+import { UserSettings } from "@/Components/User/UserSettings";
 import { NextPageWithLayout } from "@/pages/_app";
 import { useRouter } from "next/router";
 import React, { ReactElement, useEffect, useState } from "react";
@@ -7,13 +7,13 @@ import dynamic from "next/dynamic";
 
 const DynamicPublication = dynamic(
   async () =>
-    await import("@/components/User/UserPublication").then(
+    await import("@/Components/User/UserPublication").then(
       (module) => module.UserPublication
     )
 );
 const DynamicFavorites = dynamic(
   async () =>
-    await import("@/components/User/UserFavorites").then(
+    await import("@/Components/User/UserFavorites").then(
       (comp) => comp.UserFavorites
     )
 );

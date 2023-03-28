@@ -1,9 +1,9 @@
-import { CardLoop } from "@/components/CardLoop/CardLoop";
-import { ExploradorOrder } from "@/components/Explorador/ExploradorOrder/ExploradorOrder";
-import { ExploradorSearch } from "@/components/Explorador/ExploradorSearch/ExploradorSearch.";
-import { ExploradorSidebar } from "@/components/Explorador/ExploradorSidebar/ExploradorSidebar";
-import { LoadingOverlay } from "@/components/LoadingOverlay/LoadingOverlay";
-import { Pagination } from "@/components/Pagination/Pagination";
+import { CardLoop } from "@/Components/CardLoop/CardLoop";
+import { ExploradorOrder } from "@/Components/Explorador/ExploradorOrder/ExploradorOrder";
+import { ExploradorSearch } from "@/Components/Explorador/ExploradorSearch/ExploradorSearch.";
+import { ExploradorSidebar } from "@/Components/Explorador/ExploradorSidebar/ExploradorSidebar";
+import { LoadingOverlay } from "@/Components/LoadingOverlay/LoadingOverlay";
+import { Pagination } from "@/Components/Pagination/Pagination";
 import { search } from "@/utils/api/search";
 import { ExploradorContext } from "@/utils/context/ExploradorContext";
 import { ContentType, FiltersType } from "@/utils/types";

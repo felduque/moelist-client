@@ -1,4 +1,4 @@
-import { UserSidebar } from "@/components/User/UserSidebar";
+import { UserSidebar } from "@/Components/User/UserSidebar";
 import { useAppContext } from "@/utils/state";
 import Link from "next/link";
 import { useRouter } from "next/router";

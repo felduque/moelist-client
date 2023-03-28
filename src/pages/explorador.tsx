@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 const DynamicExplorador = dynamic(
   async () =>
     await import(
-      "@/components/Explorador/ExploradorContent/ExploradorContent"
+      "@/Components/Explorador/ExploradorContent/ExploradorContent"
     ).then((module) => module.Explorador)
 );
 
