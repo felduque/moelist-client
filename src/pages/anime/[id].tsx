@@ -1,39 +1,67 @@
 import React from "react";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import style from "@/styles/CardDetail.module.css";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 import moment from "moment";
 import Head from "next/head";
-import { getAnimeById } from "@/utils/api/anime";
+// import { getAnimeById } from "@/utils/api/anime";
 import { AuthorBox } from "@/Components/Author/AuthorBox";
 import { CardTopBar } from "@/Components/CardDetail/CardAuthorBar";
-import { ContentType, Scan, User } from "@/utils/types";
+// import { ContentType, Scan, User } from "@/utils/types";
 import Image from "next/image";
+import axios from "axios";
+import Router from "next/router";
 
-const CardAnime = () => {
-  const router = useRouter();
-  const [anime, setAnime] = useState<ContentType>();
-  const [scans, setScans] = useState<Scan>();
-  const [author, setAuthor] = useState<User>();
-  const id =
-    router.query["id"] ||
-    router.asPath.match(new RegExp(`[&?]${"id"}=(.*)(&|$)`));
+interface CardAnimeProps {
+  anime: {
+    id: number;
+    title: string;
+    contentType: string;
+    demography: string;
+    artist?: string | string[];
+    artists?: string[];
+    genres?: string[];
+    description: string;
+    image: string;
+    producers?: string[];
+    rating?: number;
+    score?: number;
+    type?: string;
+    studios?: string[];
+    urlContent?: string;
+    source?: string;
+    status?: string;
+    premiered?: string;
+    season?: string;
+    popularity?: number;
+    day?: string;
+    trailer?: string;
+    authors?: string[];
+    author?: string | string[];
+    duration?: string;
+    favorites?: number;
+    episodes?: number;
+    volumes?: number;
+    chapters?: number;
+  };
+  scans: {
+    id: number;
+    name: string;
+    url: string;
+    image: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+  author: {
+    id: number;
+    userName: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+}
 
-  useEffect(() => {
-    if (!id) {
-      return;
-    }
-    const fetchAnimes = async () => {
-      const animes = await getAnimeById(parseInt(id as string));
-
-      setAnime(animes?.data);
-      setScans(animes?.data?.Scan);
-      setAuthor(animes?.data?.User);
-    };
-
-    fetchAnimes();
-  }, [id]);
-
+const CardAnime = ({ anime, scans, author }: CardAnimeProps) => {
   return (
     <>
       <Head>
@@ -392,6 +420,24 @@ const CardAnime = () => {
       </div>
     </>
   );
+};
+
+CardAnime.getInitialProps = async (ctx: any) => {
+  console.log(typeof ctx, "ctx");
+  const { query } = ctx;
+  const { id } = query;
+
+  if (!id) {
+    Router.reload();
+  }
+  try {
+    const res = await axios.get(`https://apix.moelist.online/anime/${id}`);
+    const data = await res.data;
+    return { anime: data, scans: data.Scan, author: data.User };
+  } catch (error) {
+    console.log(error);
+    Router.reload();
+  }
 };
 
 export default CardAnime;

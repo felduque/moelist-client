@@ -1,6 +1,6 @@
 import React, { FC, useContext } from "react";
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 
 import { CardItemAction } from "./CardAction";
 import { findFavorite } from "@/utils/helpers";
@@ -35,12 +35,10 @@ export const CardItem: FC<Props> = ({ content, index, action, showHover }) => {
         <div className="card-inner text-center">
           <div className="card-image position-relative mb-2">
             <Link href={`/${contentType}/${id}`}>
-              <Image
+              <img
                 src={image}
-                className="content-card-main-banner"
                 alt={title}
-                width={195}
-                height={250}
+                className="content-card-main-banner"
               />
 
               <div className="demography text-white position-absolute text-center w-100">

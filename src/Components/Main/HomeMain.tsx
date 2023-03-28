@@ -35,7 +35,7 @@ export const HomeMain = () => {
       >
         <div className={styles.alert_page}>
           <h2 className={styles.alert_page_text}>
-            Estas son las <span className="txt-primary">novedades:</span>
+            Estas son las <span className="txt-primary">novedades en Moelist:</span>
             <ul className="mt-3">
               <li>Ya puedes registrarte </li>
               <li>

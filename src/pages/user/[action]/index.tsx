@@ -2,7 +2,7 @@ import { UserSettings } from "@/Components/User/UserSettings";
 import { NextPageWithLayout } from "@/pages/_app";
 import { useRouter } from "next/router";
 import React, { ReactElement, useEffect, useState } from "react";
-import Layout from "../../../Components/layouts/Layout";
+import Layout from "@/Components/layouts/layout";
 import dynamic from "next/dynamic";
 
 const DynamicPublication = dynamic(

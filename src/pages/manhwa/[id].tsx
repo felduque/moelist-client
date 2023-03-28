@@ -1,38 +1,61 @@
 import React from "react";
-import { useRouter } from "next/router";
 import style from "@/styles/CardDetail.module.css";
-import { useEffect, useState } from "react";
 import Head from "next/head";
 import { AuthorBox } from "@/Components/Author/AuthorBox";
 import { CardTopBar } from "@/Components/CardDetail/CardAuthorBar";
-import { ContentType, Scan, User } from "@/utils/types";
-import Image from "next/image";
-import { getManhwasById } from "@/utils/api/manhwas";
+import axios from "axios";
+import Router from "next/router";
 
-const CardManhwa = () => {
-  const [manhwa, setmanhwa] = useState<ContentType>();
-  const [scans, setScans] = useState<Scan>();
-  const [author, setAuthor] = useState<User>();
+interface CardManhwaPros {
+  manhwa: {
+    id: number;
+    title: string;
+    contentType: string;
+    demography: string;
+    artist?: string | string[];
+    artists?: string[];
+    genres?: string[];
+    description: string;
+    image: string;
+    producers?: string[];
+    rating?: number;
+    score?: number;
+    type?: string;
+    studios?: string[];
+    urlContent?: string;
+    source?: string;
+    status?: string;
+    premiered?: string;
+    season?: string;
+    popularity?: number;
+    day?: string;
+    trailer?: string;
+    authors?: string[];
+    author?: string | string[];
+    duration?: string;
+    favorites?: number;
+    episodes?: number;
+    volumes?: number;
+    chapters?: number;
+  };
+  scans: {
+    id: number;
+    name: string;
+    url: string;
+    image: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+  author: {
+    id: number;
+    userName: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+}
 
-  const router = useRouter();
-  const id =
-    router.query["id"] ||
-    router.asPath.match(new RegExp(`[&?]${"id"}=(.*)(&|$)`));
-
-  useEffect(() => {
-    if (!id) {
-      return;
-    }
-    const fetchManhwa = async () => {
-      const manhwa = await getManhwasById(parseInt(id as string));
-
-      setmanhwa(manhwa?.data);
-      setScans(manhwa?.data?.Scan);
-      setAuthor(manhwa?.data?.User);
-    };
-
-    fetchManhwa();
-  }, [id]);
+const CardManhwa = ({ manhwa, scans, author }: CardManhwaPros) => {
   return (
     <>
       <Head>
@@ -93,7 +116,7 @@ const CardManhwa = () => {
       <div className={`container-fluid ${style.bg_card}`}>
         <div className={`row pt-5 ${style.content_sinopsis_and_banner}`}>
           <div className="col-12 col-xl-3 text-center">
-            <Image
+            <img
               className={style.content_primary_card__img}
               src={manhwa?.image!}
               alt={manhwa?.title!}
@@ -301,7 +324,7 @@ const CardManhwa = () => {
               <div className="col-12 col-md-6 col-xl-4">
                 <a href={manhwa?.urlContent} target="_blank">
                   <div className={style.content_afiliates_logos}>
-                    <Image
+                    <img
                       className={style.afiliate_logo}
                       src={scans?.image!}
                       alt={scans?.name!}
@@ -322,4 +345,19 @@ const CardManhwa = () => {
   );
 };
 
+CardManhwa.getInitialProps = async (ctx: any) => {
+  const { id } = ctx.query;
+
+  if (!id) {
+    Router.reload();
+  }
+  try {
+    const res = await axios.get(`https://apix.moelist.online/manhwa/${id}`);
+    const data = await res.data;
+    return { manhwa: data, scans: data.Scan, author: data.User };
+  } catch (error) {
+    console.log(error);
+    Router.reload();
+  }
+};
 export default CardManhwa;

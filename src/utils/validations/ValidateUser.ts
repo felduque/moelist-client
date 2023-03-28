@@ -29,7 +29,6 @@ export const validateUserSettings = (
   if (values.binanceId && isNaN(values.binanceId)) {
     errors.binanceId = nonValid;
   }
-  console.log(values.twitter);
   if (values.twitter && !regexTwitter.test(values.twitter)) {
     errors.twitter = nonValid;
   }

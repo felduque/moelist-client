@@ -173,7 +173,6 @@ export const UserPublication = () => {
           const images = {
             image: data.image,
           };
-          console.log(data.image, id);
           updateAnime(id, images.image!);
         })
         .catch((err) => {
@@ -254,7 +253,6 @@ export const UserPublication = () => {
   const handleChange = (option: any) => {
     const { value, label } = option.option;
     const isArr = Array.isArray(option.option);
-    console.log(label);
     setData({
       ...data,
       [option.type]: isArr ? value : label,
@@ -290,7 +288,6 @@ export const UserPublication = () => {
 
   /*se ejecuta este codigo cuando uno le da a publicar */
   useEffect(() => {
-    console.log(errors, submitting);
 
     if (errors && submitting) {
       if (Object.keys(errors).length !== 0) {

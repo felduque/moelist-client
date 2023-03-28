@@ -1,39 +1,61 @@
 import React from "react";
-import { useRouter } from "next/router";
 import style from "@/styles/CardDetail.module.css";
-import { useEffect, useState } from "react";
 import Head from "next/head";
 import { AuthorBox } from "@/Components/Author/AuthorBox";
 import { CardTopBar } from "@/Components/CardDetail/CardAuthorBar";
-import { ContentType, Scan, User } from "@/utils/types";
-import Image from "next/image";
-import { getManhuasById } from "@/utils/api/manhua";
+import axios from "axios";
+import Router from "next/router";
 
-const CardManhua = () => {
-  const [manhua, setmanhua] = useState<ContentType>();
-  const [scans, setScans] = useState<Scan>();
-  const [author, setAuthor] = useState<User>();
+interface CardManhuaPros {
+  manhua: {
+    id: number;
+    title: string;
+    contentType: string;
+    demography: string;
+    artist?: string | string[];
+    artists?: string[];
+    genres?: string[];
+    description: string;
+    image: string;
+    producers?: string[];
+    rating?: number;
+    score?: number;
+    type?: string;
+    studios?: string[];
+    urlContent?: string;
+    source?: string;
+    status?: string;
+    premiered?: string;
+    season?: string;
+    popularity?: number;
+    day?: string;
+    trailer?: string;
+    authors?: string[];
+    author?: string | string[];
+    duration?: string;
+    favorites?: number;
+    episodes?: number;
+    volumes?: number;
+    chapters?: number;
+  };
+  scans: {
+    id: number;
+    name: string;
+    url: string;
+    image: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+  author: {
+    id: number;
+    userName: string;
+    email: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+}
 
-  const router = useRouter();
-  const id =
-    router.query["id"] ||
-    router.asPath.match(new RegExp(`[&?]${"id"}=(.*)(&|$)`));
-
-  useEffect(() => {
-    if (!id) {
-      return;
-    }
-    const fetchManhua = async () => {
-      const manhua = await getManhuasById(parseInt(id as string));
-
-      setmanhua(manhua?.data);
-      setScans(manhua?.data?.Scan);
-      setAuthor(manhua?.data?.User);
-    };
-
-    fetchManhua();
-  }, [id]);
-
+const CardManhua = ({ manhua, scans, author }: CardManhuaPros) => {
   return (
     <>
       <Head>
@@ -94,7 +116,7 @@ const CardManhua = () => {
       <div className={`container-fluid ${style.bg_card}`}>
         <div className={`row pt-5 ${style.content_sinopsis_and_banner}`}>
           <div className="col-12 col-xl-3 text-center">
-            <Image
+            <img
               className={style.content_primary_card__img}
               src={manhua?.image!}
               alt={manhua?.title!}
@@ -302,7 +324,7 @@ const CardManhua = () => {
               <div className="col-12 col-md-6 col-xl-4">
                 <a href={manhua?.urlContent} target="_blank">
                   <div className={style.content_afiliates_logos}>
-                    <Image
+                    <img
                       className={style.afiliate_logo}
                       src={scans?.image!}
                       alt={scans?.name!}
@@ -321,6 +343,21 @@ const CardManhua = () => {
       </div>
     </>
   );
+};
+
+CardManhua.getInitialProps = async (ctx: any) => {
+  const { id } = ctx.query;
+  if (!id) {
+    Router.reload();
+  }
+  try {
+    const res = await axios.get(`https://apix.moelist.online/manhua/${id}`);
+    const data = await res.data;
+    return { manhua: data, scans: data.Scan, author: data.User };
+  } catch (error) {
+    console.log(error);
+    Router.reload();
+  }
 };
 
 export default CardManhua;

@@ -7,7 +7,8 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        hostname: "https://moelist.online/",
+        protocol: "https",
+        hostname: "apix.moelist.online",
       },
     ],
   },
