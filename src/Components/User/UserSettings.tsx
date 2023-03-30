@@ -84,8 +84,8 @@ export const UserSettings = () => {
             handleChange={(file: File) => handleImage(file)}
             children={
               <>
-                {preview ? (
-                  <img src={preview} />
+                {preview || user.avatar ? (
+                  <img src={preview || user.avatar} />
                 ) : (
                   <>
                     <RiImageAddFill className="fs-1" />

@@ -24,6 +24,8 @@ export type User = {
   binanceId?: number;
   paypal?: string;
   twitter?: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type UpdateUserParams = {
@@ -47,6 +49,8 @@ export type SelectOption = {
   label: string;
   value: string;
 };
+
+export type GetAnimeByIdResponse = {};
 
 export type ContentType = {
   id: number;
@@ -138,9 +142,11 @@ export type CreatePublicationParams = Partial<{
 
 export type Scan = {
   id: number;
+  name: string;
   url: string;
   image: string;
-  name: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type LoginParams = {

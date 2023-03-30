@@ -5,64 +5,21 @@ import { AuthorBox } from "@/Components/Author/AuthorBox";
 import { CardTopBar } from "@/Components/CardDetail/CardAuthorBar";
 import axios from "axios";
 import Router from "next/router";
+import { NextPage, NextPageContext } from "next";
+import { ContentType } from "@/utils/types";
+import Image from "next/image";
 
-interface CardManhuaPros {
-  manhua: {
-    id: number;
-    title: string;
-    contentType: string;
-    demography: string;
-    artist?: string | string[];
-    artists?: string[];
-    genres?: string[];
-    description: string;
-    image: string;
-    producers?: string[];
-    rating?: number;
-    score?: number;
-    type?: string;
-    studios?: string[];
-    urlContent?: string;
-    source?: string;
-    status?: string;
-    premiered?: string;
-    season?: string;
-    popularity?: number;
-    day?: string;
-    trailer?: string;
-    authors?: string[];
-    author?: string | string[];
-    duration?: string;
-    favorites?: number;
-    episodes?: number;
-    volumes?: number;
-    chapters?: number;
-  };
-  scans: {
-    id: number;
-    name: string;
-    url: string;
-    image: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-  author: {
-    id: number;
-    userName: string;
-    email: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-}
-
-const CardManhua = ({ manhua, scans, author }: CardManhuaPros) => {
+const CardManhua: NextPage<ContentType | undefined> = (content) => {
   return (
     <>
       <Head>
-        <title>{manhua?.title.slice(0, 60)}</title>
-        <meta name="description" content={manhua?.description?.slice(0, 150)} />
-        <meta name="keywords" content={manhua?.genres?.join(", ")} />
-        <meta name="author" content={author?.userName} />
+        <title>{content?.title.slice(0, 60)}</title>
+        <meta
+          name="description"
+          content={content?.description?.slice(0, 150)}
+        />
+        <meta name="keywords" content={content?.genres?.join(", ")} />
+        <meta name="author" content={content?.User?.userName} />
         <meta name="robots" content="index, follow" />
         <meta name="language" content="Spanish" />
         <meta name="revisit-after" content="1 days" />
@@ -87,18 +44,18 @@ const CardManhua = ({ manhua, scans, author }: CardManhuaPros) => {
         />
         <meta property="og:locale" content="es_ES" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content={manhua?.title?.slice(0, 60)} />
+        <meta property="og:title" content={content?.title?.slice(0, 60)} />
         <meta
           property="og:description"
-          content={manhua?.description?.slice(0, 150)}
+          content={content?.description?.slice(0, 150)}
         />
         <meta property="og:url" content="https://moelist.online" />
         <meta property="og:site_name" content="Moelist" />
-        <meta property="og:image" content={manhua?.image} />
-        <meta property="og:image:secure_url" content={manhua?.image} />
+        <meta property="og:image" content={content?.image} />
+        <meta property="og:image:secure_url" content={content?.image} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content={manhua?.title.slice(0, 60)} />
+        <meta property="og:image:alt" content={content?.title.slice(0, 60)} />
         <meta name="googlebot" content="index, follow" />
         <meta name="googlebot-news" content="index, follow" />
         <meta name="googlebot-video" content="index, follow" />
@@ -116,33 +73,40 @@ const CardManhua = ({ manhua, scans, author }: CardManhuaPros) => {
       <div className={`container-fluid ${style.bg_card}`}>
         <div className={`row pt-5 ${style.content_sinopsis_and_banner}`}>
           <div className="col-12 col-xl-3 text-center">
-            <img
+            <Image
+              src={content?.image!}
+              alt={content?.title!}
+              width={250}
+              height={250}
+              className="content-card-main-banner"
+            />
+            {/* <img
               className={style.content_primary_card__img}
-              src={manhua?.image!}
-              alt={manhua?.title!}
+              src={content?.image!}
+              alt={content?.title!}
               width={440}
               height={440}
-            />
+            /> */}
 
             <AuthorBox
-              type={manhua?.contentType || ""}
-              author={author?.userName || ""}
+              type={content?.contentType || ""}
+              author={content?.User?.userName || ""}
             />
           </div>
           <div className="col-12 col-xl-9">
             <div className={style.content_sinopsis}>
               <div className={style.title_card_content}>
-                <h1 className={style.content_card__title}>{manhua?.title}</h1>
+                <h1 className={style.content_card__title}>{content?.title}</h1>
               </div>
               <h2 className={style.content_sinopsis__title}>Sinopsis</h2>
               <p className={style.content_sinopsis__text}>
-                {manhua?.description}
+                {content?.description}
               </p>
               <div className={style.content_title_genres}>
                 <h2 className={style.content_genre_title}>Generos</h2>
               </div>
               <div className={style.content_sinopsis__generos}>
-                {manhua?.genres?.map((genre, index) => (
+                {content?.genres?.map((genre, index) => (
                   <li
                     key={index}
                     className={style.content_sinopsis__generos__item}
@@ -179,7 +143,7 @@ const CardManhua = ({ manhua, scans, author }: CardManhuaPros) => {
                       style.content_primary_card__info__content__item__text
                     }
                   >
-                    {manhua?.type}
+                    {content?.type}
                   </p>
                 </div>
                 <div
@@ -197,7 +161,7 @@ const CardManhua = ({ manhua, scans, author }: CardManhuaPros) => {
                       style.content_primary_card__info__content__item__text
                     }
                   >
-                    {manhua?.chapters}
+                    {content?.chapters}
                   </p>
                 </div>
 
@@ -216,7 +180,7 @@ const CardManhua = ({ manhua, scans, author }: CardManhuaPros) => {
                       style.content_primary_card__info__content__item__text
                     }
                   >
-                    {manhua?.day}
+                    {content?.day}
                   </p>
                 </div>
 
@@ -235,7 +199,7 @@ const CardManhua = ({ manhua, scans, author }: CardManhuaPros) => {
                       style.content_primary_card__info__content__item__text
                     }
                   >
-                    {manhua?.volumes}
+                    {content?.volumes}
                   </p>
                 </div>
 
@@ -254,7 +218,7 @@ const CardManhua = ({ manhua, scans, author }: CardManhuaPros) => {
                       style.content_primary_card__info__content__item__text
                     }
                   >
-                    {manhua?.status}
+                    {content?.status}
                   </p>
                 </div>
 
@@ -273,7 +237,7 @@ const CardManhua = ({ manhua, scans, author }: CardManhuaPros) => {
                       style.content_primary_card__info__content__item__text
                     }
                   >
-                    {manhua?.authors}
+                    {content?.authors}
                   </p>
                 </div>
                 <div
@@ -291,7 +255,7 @@ const CardManhua = ({ manhua, scans, author }: CardManhuaPros) => {
                       style.content_primary_card__info__content__item__text
                     }
                   >
-                    {manhua?.artists}
+                    {content?.artists}
                   </p>
                 </div>
                 <div
@@ -309,7 +273,7 @@ const CardManhua = ({ manhua, scans, author }: CardManhuaPros) => {
                       style.content_primary_card__info__content__item__text
                     }
                   >
-                    {manhua?.demography}
+                    {content?.demography}
                   </p>
                 </div>
               </div>
@@ -322,17 +286,27 @@ const CardManhua = ({ manhua, scans, author }: CardManhuaPros) => {
               </div>
 
               <div className="col-12 col-md-6 col-xl-4">
-                <a href={manhua?.urlContent} target="_blank">
+                <a href={content?.urlContent} target="_blank">
                   <div className={style.content_afiliates_logos}>
-                    <img
+                    <Image
                       className={style.afiliate_logo}
-                      src={scans?.image!}
-                      alt={scans?.name!}
+                      src={content?.Scan?.image!}
+                      alt={content?.Scan?.name!}
                       width={350}
                       height={260}
                     />
+                    {/* 
+                    <img
+                      className={style.afiliate_logo}
+                      src={content?.Scan?.image!}
+                      alt={content?.Scan?.name!}
+                      width={350}
+                      height={260}
+                    /> */}
 
-                    <h3 className="text-white text-center">{scans?.name}</h3>
+                    <h3 className="text-white text-center">
+                      {content?.Scan?.name}
+                    </h3>
                   </div>
                 </a>
               </div>
@@ -345,7 +319,7 @@ const CardManhua = ({ manhua, scans, author }: CardManhuaPros) => {
   );
 };
 
-CardManhua.getInitialProps = async (ctx: any) => {
+CardManhua.getInitialProps = async (ctx: NextPageContext) => {
   const { id } = ctx.query;
   if (!id) {
     Router.reload();
@@ -353,7 +327,7 @@ CardManhua.getInitialProps = async (ctx: any) => {
   try {
     const res = await axios.get(`https://apix.moelist.online/manhua/${id}`);
     const data = await res.data;
-    return { manhua: data, scans: data.Scan, author: data.User };
+    return data;
   } catch (error) {
     console.log(error);
     Router.reload();

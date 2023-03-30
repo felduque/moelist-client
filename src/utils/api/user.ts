@@ -13,12 +13,13 @@ export const getUserById = async (id: number) => {
 };
 
 export const updateUser = async (id: number, data: UpdateUserParams) => {
-  console.log(data, id);
+  console.log("pasa");
+  const { avatar } = data;
   try {
     const token = localStorage.getItem("token");
     const res = await axios.patch(
       `https://apix.moelist.online/updateuser/${id}`,
-      data,
+      { ...data, image: avatar },
       {
         headers: {
           "Content-Type": "multipart/form-data",

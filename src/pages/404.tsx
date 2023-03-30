@@ -8,7 +8,7 @@ const NotFound = () => {
       <div
         className={`${styles.not_found_wrapper} d-flex flex-column text-white justify-content-center align-items-center`}
       >
-        <Image
+        <img
           src="/not-found-error.svg"
           alt="Pagina no encontrada"
           className={styles.not_found_img}

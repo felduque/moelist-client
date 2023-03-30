@@ -15,6 +15,13 @@ import { NextPage } from "next";
 
 import { AppLayout } from "@/Components/layouts/AppLayout";
 
+import { Poppins } from "next/font/google";
+
+const poppins = Poppins({
+  weight: ["300", "400", "500", "600", "600"],
+  subsets: ["latin"],
+});
+
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
@@ -33,7 +40,9 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <>
       <AppWrapper>
-        <AppLayout>{getLayout(<Component {...pageProps} />)}</AppLayout>
+        <AppLayout className={poppins.className}>
+          {getLayout(<Component {...pageProps} />)}
+        </AppLayout>
       </AppWrapper>
     </>
   );

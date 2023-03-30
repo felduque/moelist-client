@@ -10,9 +10,11 @@ export const HomeMain = () => {
   const [mangas, setMangas] = useState<ContentType[]>([]);
   const [manhwas, setManhwas] = useState<ContentType[]>([]);
   const [manhuas, setManhuas] = useState<ContentType[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAnimes = async () => {
+      setLoading(true);
       const resp = await getContentAndPaginate(1, 12);
       const content = resp.data;
 
@@ -24,6 +26,8 @@ export const HomeMain = () => {
         content.filter((c: ContentType) => c.contentType === "manhwa")
       );
       setMangas(content.filter((c: ContentType) => c.contentType === "manga"));
+
+      setLoading(false);
     };
     fetchAnimes();
   }, []);
@@ -51,20 +55,20 @@ export const HomeMain = () => {
         <div className={styles.content_title_category}>
           <h2 className="text-white">Animes</h2>
         </div>
-        <CardLoop cards={animes} />
+        <CardLoop cards={animes} loading={loading} />
         <div className={styles.content_title_category}>
           <h2 className="text-white">Mangas</h2>
         </div>
-        <CardLoop cards={mangas} />
+        <CardLoop cards={mangas} loading={loading} />
         <div className={styles.content_title_category}>
           <h2 className="text-white">Manhwas</h2>
         </div>
-        <CardLoop cards={manhwas} />
+        <CardLoop cards={manhwas} loading={loading} />
 
         <div className={styles.content_title_category}>
           <h2 className="text-white">Manhuas</h2>
         </div>
-        <CardLoop cards={manhuas} />
+        <CardLoop cards={manhuas} loading={loading} />
       </div>
     </div>
   );

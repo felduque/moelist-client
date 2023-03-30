@@ -1,74 +1,27 @@
 import React from "react";
-// import { useRouter } from "next/router";
 import style from "@/styles/CardDetail.module.css";
-// import { useEffect, useState } from "react";
 import moment from "moment";
 import Head from "next/head";
-// import { getAnimeById } from "@/utils/api/anime";
 import { AuthorBox } from "@/Components/Author/AuthorBox";
 import { CardTopBar } from "@/Components/CardDetail/CardAuthorBar";
-// import { ContentType, Scan, User } from "@/utils/types";
 import Image from "next/image";
 import axios from "axios";
 import Router from "next/router";
+import { ContentType } from "@/utils/types";
+import { NextPage, NextPageContext } from "next";
 
-interface CardAnimeProps {
-  anime: {
-    id: number;
-    title: string;
-    contentType: string;
-    demography: string;
-    artist?: string | string[];
-    artists?: string[];
-    genres?: string[];
-    description: string;
-    image: string;
-    producers?: string[];
-    rating?: number;
-    score?: number;
-    type?: string;
-    studios?: string[];
-    urlContent?: string;
-    source?: string;
-    status?: string;
-    premiered?: string;
-    season?: string;
-    popularity?: number;
-    day?: string;
-    trailer?: string;
-    authors?: string[];
-    author?: string | string[];
-    duration?: string;
-    favorites?: number;
-    episodes?: number;
-    volumes?: number;
-    chapters?: number;
-  };
-  scans: {
-    id: number;
-    name: string;
-    url: string;
-    image: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-  author: {
-    id: number;
-    userName: string;
-    email: string;
-    createdAt: string;
-    updatedAt: string;
-  };
-}
-
-const CardAnime = ({ anime, scans, author }: CardAnimeProps) => {
+const Cardcontent: NextPage<ContentType | undefined> = (content) => {
+  console.log(content?.image);
   return (
     <>
       <Head>
-        <title>{anime?.title?.slice(0, 60)}</title>
-        <meta name="description" content={anime?.description?.slice(0, 150)} />
-        <meta name="keywords" content={anime?.genres?.join(", ")} />
-        <meta name="author" content={author?.userName} />
+        <title>{content?.title?.slice(0, 60)}</title>
+        <meta
+          name="description"
+          content={content?.description?.slice(0, 150)}
+        />
+        <meta name="keywords" content={content?.genres?.join(", ")} />
+        <meta name="author" content={content?.author as string} />
         <meta name="robots" content="index, follow" />
         <meta name="language" content="Spanish" />
         <meta name="revisit-after" content="1 days" />
@@ -93,18 +46,18 @@ const CardAnime = ({ anime, scans, author }: CardAnimeProps) => {
         />
         <meta property="og:locale" content="es_ES" />
         <meta property="og:type" content="website" />
-        <meta property="og:title" content={anime?.title?.slice(0, 60)} />
+        <meta property="og:title" content={content?.title?.slice(0, 60)} />
         <meta
           property="og:description"
-          content={anime?.description?.slice(0, 150)}
+          content={content?.description?.slice(0, 150)}
         />
         <meta property="og:url" content="https://moelist.online" />
         <meta property="og:site_name" content="Moelist" />
-        <meta property="og:image" content={anime?.image} />
-        <meta property="og:image:secure_url" content={anime?.image} />
+        <meta property="og:image" content={content?.image} />
+        <meta property="og:image:secure_url" content={content?.image} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        <meta property="og:image:alt" content={anime?.title?.slice(0, 60)} />
+        <meta property="og:image:alt" content={content?.title?.slice(0, 60)} />
         <meta name="googlebot" content="index, follow" />
         <meta name="googlebot-news" content="index, follow" />
         <meta name="googlebot-video" content="index, follow" />
@@ -125,29 +78,31 @@ const CardAnime = ({ anime, scans, author }: CardAnimeProps) => {
           <div className="col-12 col-xl-3 text-center text-white">
             <Image
               className={style.content_primary_card__img}
-              src={anime?.image!}
-              alt={anime?.title!}
+              src={content?.image!}
+              alt={content?.title!}
               width={440}
               height={440}
             />
 
             <AuthorBox
-              type={anime?.contentType || ""}
-              author={author?.userName || ""}
+              type={content?.contentType || ""}
+              author={content?.User?.userName || ""}
             />
           </div>
           <div className="col-12 col-xl-9">
             <div className={style.title_card_content}>
-              <h1 className={style.content_card__title}>{anime?.title}</h1>
+              <h1 className={style.content_card__title}>{content?.title}</h1>
             </div>
             <h2 className={style.content_sinopsis__title}>Sinopsis</h2>
-            <p className={style.content_sinopsis__text}>{anime?.description}</p>
+            <p className={style.content_sinopsis__text}>
+              {content?.description}
+            </p>
             <div className={style.content_title_genres}>
               <h2 className={style.content_genre_title}>Generos</h2>
             </div>
 
             <div className={style.content_sinopsis__generos}>
-              {anime?.genres?.map((genre, index) => (
+              {content?.genres?.map((genre, index) => (
                 <li
                   key={index}
                   className={style.content_sinopsis__generos__item}
@@ -182,7 +137,7 @@ const CardAnime = ({ anime, scans, author }: CardAnimeProps) => {
                       style.content_primary_card__info__content__item__text
                     }
                   >
-                    {anime?.type}
+                    {content?.type}
                   </p>
                 </div>
                 <div
@@ -200,7 +155,7 @@ const CardAnime = ({ anime, scans, author }: CardAnimeProps) => {
                       style.content_primary_card__info__content__item__text
                     }
                   >
-                    {anime?.episodes}
+                    {content?.episodes}
                   </p>
                 </div>
                 <div
@@ -218,7 +173,7 @@ const CardAnime = ({ anime, scans, author }: CardAnimeProps) => {
                       style.content_primary_card__info__content__item__text
                     }
                   >
-                    {anime?.source}
+                    {content?.source}
                   </p>
                 </div>
 
@@ -237,7 +192,7 @@ const CardAnime = ({ anime, scans, author }: CardAnimeProps) => {
                       style.content_primary_card__info__content__item__text
                     }
                   >
-                    {anime?.status}
+                    {content?.status}
                   </p>
                 </div>
                 <div
@@ -255,7 +210,7 @@ const CardAnime = ({ anime, scans, author }: CardAnimeProps) => {
                       style.content_primary_card__info__content__item__text
                     }
                   >
-                    {moment(anime?.premiered).format("MM/DD/YY")}
+                    {moment(content?.premiered).format("MM/DD/YY")}
                   </p>
                 </div>
                 <div
@@ -273,7 +228,7 @@ const CardAnime = ({ anime, scans, author }: CardAnimeProps) => {
                       style.content_primary_card__info__content__item__text
                     }
                   >
-                    {anime?.duration}
+                    {content?.duration}
                   </p>
                 </div>
                 <div
@@ -291,7 +246,7 @@ const CardAnime = ({ anime, scans, author }: CardAnimeProps) => {
                       style.content_primary_card__info__content__item__text
                     }
                   >
-                    {anime?.demography}
+                    {content?.demography}
                   </p>
                 </div>
                 <div
@@ -309,7 +264,7 @@ const CardAnime = ({ anime, scans, author }: CardAnimeProps) => {
                       style.content_primary_card__info__content__item__text
                     }
                   >
-                    {anime?.season}
+                    {content?.season}
                   </p>
                 </div>
                 <div
@@ -322,7 +277,7 @@ const CardAnime = ({ anime, scans, author }: CardAnimeProps) => {
                   >
                     Estudio
                   </h3>
-                  {anime?.studios?.map((studio, index) => (
+                  {content?.studios?.map((studio, index) => (
                     <p
                       className={
                         style.content_primary_card__info__content__item__text
@@ -348,7 +303,7 @@ const CardAnime = ({ anime, scans, author }: CardAnimeProps) => {
                       style.content_primary_card__info__content__item__text
                     }
                   >
-                    {anime?.author}
+                    {content?.author}
                   </p>
                 </div>
                 <div
@@ -366,7 +321,7 @@ const CardAnime = ({ anime, scans, author }: CardAnimeProps) => {
                       style.content_primary_card__info__content__item__text
                     }
                   >
-                    {anime?.artist}
+                    {content?.artist}
                   </p>
                 </div>
                 <div
@@ -379,7 +334,7 @@ const CardAnime = ({ anime, scans, author }: CardAnimeProps) => {
                   >
                     Producido
                   </h3>
-                  {anime?.producers?.map((item, index) => (
+                  {content?.producers?.map((item, index) => (
                     <p
                       className={
                         style.content_primary_card__info__content__item__text
@@ -399,17 +354,26 @@ const CardAnime = ({ anime, scans, author }: CardAnimeProps) => {
                 Disfruta de todo el contenido en las siguientes paginas
               </div>
               <div className="col-12 col-md-6 col-xl-4">
-                <a href={anime?.urlContent} target="_blank">
+                <a href={content?.urlContent} target="_blank">
                   <div className={style.content_afiliates_logos}>
                     <Image
                       className={style.afiliate_logo}
-                      src={scans?.image!}
-                      alt={scans?.name!}
+                      src={content?.Scan?.image!}
+                      alt={content?.Scan?.name!}
                       width={350}
                       height={260}
                     />
+                    {/* <img
+                      className={style.afiliate_logo}
+                      src={content?.Scan?.image}
+                      alt={content?.Scan?.name}
+                      width={350}
+                      height={260}
+                    /> */}
 
-                    <h3 className="text-white text-center">{scans?.name}</h3>
+                    <h3 className="text-white text-center">
+                      {content?.Scan?.name}
+                    </h3>
                   </div>
                 </a>
               </div>
@@ -422,7 +386,7 @@ const CardAnime = ({ anime, scans, author }: CardAnimeProps) => {
   );
 };
 
-CardAnime.getInitialProps = async (ctx: any) => {
+Cardcontent.getInitialProps = async (ctx: NextPageContext) => {
   console.log(typeof ctx, "ctx");
   const { query } = ctx;
   const { id } = query;
@@ -431,13 +395,15 @@ CardAnime.getInitialProps = async (ctx: any) => {
     Router.reload();
   }
   try {
-    const res = await axios.get(`https://apix.moelist.online/anime/${id}`);
+    const res = await axios.get<ContentType>(
+      `https://apix.moelist.online/anime/${id}`
+    );
     const data = await res.data;
-    return { anime: data, scans: data.Scan, author: data.User };
+    return data;
   } catch (error) {
     console.log(error);
     Router.reload();
   }
 };
 
-export default CardAnime;
+export default Cardcontent;

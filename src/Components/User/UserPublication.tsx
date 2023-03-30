@@ -145,6 +145,7 @@ export const UserPublication = () => {
   };
 
   const savePublication = () => {
+    console.log(data);
     if (data.type === "Anime") {
       const newData: CreatePublicationParams = {
         type: "Tv", // ✔️
@@ -216,7 +217,7 @@ export const UserPublication = () => {
             });
           break;
 
-        case "Mahua":
+        case "Manhua":
           createManhua(newData)
             .then((res) => {
               const id = parseInt(res?.data?.id);
@@ -288,7 +289,6 @@ export const UserPublication = () => {
 
   /*se ejecuta este codigo cuando uno le da a publicar */
   useEffect(() => {
-
     if (errors && submitting) {
       if (Object.keys(errors).length !== 0) {
         Swal.fire({

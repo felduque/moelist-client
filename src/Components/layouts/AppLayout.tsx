@@ -1,13 +1,22 @@
-import React from "react";
+import React, { FC, PropsWithChildren } from "react";
 import { Footer } from "../Footer/Footer";
 import { Navbar } from "../Navbar/Navbar";
 
-export const AppLayout = ({ children }: any) => {
+type Props = {
+  className: string;
+};
+
+export const AppLayout: FC<PropsWithChildren & Props> = ({
+  className,
+  children,
+}) => {
   return (
     <>
-      <Navbar />
-      {children}
-      <Footer />
+      <main className={className}>
+        <Navbar />
+        {children}
+        <Footer />
+      </main>
     </>
   );
 };

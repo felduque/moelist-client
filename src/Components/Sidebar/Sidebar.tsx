@@ -8,9 +8,11 @@ import { CardLoop } from "../CardLoop/CardLoop";
 
 export const Sidebar = () => {
   const [ultimos, setUltimos] = useState<ContentType[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       const response = await lastAnime();
       const response2 = await lastManga();
       const response3 = await lastManhua();
@@ -21,6 +23,7 @@ export const Sidebar = () => {
       const data2 = response2.data;
       const data3 = response3.data;
       const data4 = response4.data;
+      setLoading(false);
       setUltimos([...data, ...data2, ...data3, ...data4]);
     };
     fetchData();
@@ -33,7 +36,13 @@ export const Sidebar = () => {
         <div className="sidebar-content-title-list-cards">
           <h2 className="sidebar-text-title-list-cards">Ultimos Agregados</h2>
         </div>
-        <CardLoop cards={ultimos} oneCol={true} showDesc={false} />
+        <CardLoop
+          cards={ultimos}
+          oneCol={true}
+          showDesc={false}
+          loading={loading}
+          skeletonCount={6}
+        />
       </div>
     </div>
   );
